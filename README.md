@@ -16,13 +16,32 @@ Temporary personal mirror for installing on Intel hardware. CUPS, Avahi (mDNS), 
    # edit psk_gfs_iot=... on the installed system path
    ```
 
-5. Install:
+5. Install (pick one):
+
+   **A — Local flake on USB (no `api.github.com`; use when GitHub API is blocked):**
+
+   On a machine that has this repo:
+
+   ```bash
+   tar -czf print-server.tar.gz -C "$(dirname "$PWD")" "$(basename "$PWD")"
+   # copy print-server.tar.gz to the installer USB, then on the installer:
+   tar -xzf /mnt/usb/print-server.tar.gz -C /mnt
+   sudo nixos-install --flake /mnt/print-server#print-server
+   ```
+
+   **B — Git clone (often works if only the API is blocked):**
+
+   ```bash
+   git clone https://github.com/wolfclostermann/print-server.git
+   cd print-server
+   sudo nixos-install --flake .#print-server
+   ```
+
+   **C — Remote flake (needs HTTPS to `api.github.com`):**
 
    ```bash
    sudo nixos-install --flake github:wolfclostermann/print-server#print-server
    ```
-
-   Or clone this repo on the installer and `nixos-install --flake .#print-server`.
 
 ## Build x86_64 ISO from Apple Silicon
 
